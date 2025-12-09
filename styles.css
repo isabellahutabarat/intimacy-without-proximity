@@ -54,9 +54,20 @@ html, body { height: 100%; }
   font-style: italic;
   font-display: swap;
 }
+@font-face {
+  font-family: "ABC Diatype";
+  src:
+    url("./ABC Diatype copy 2/ABCDiatype-Light-Trial.woff2") format("woff2"),
+    url("./ABC Diatype copy 2/ABCDiatype-Light-Trial.woff") format("woff"),
+    url("./ABC Diatype copy 2/ABCDiatype-Light-Trial.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
 body {
   margin: 0;
   font-family: var(--font-body);
+  font-weight: 300; /* Lighter weight for desktop */
   font-size: var(--font-size-body);
   color: var(--color-text);
   background: var(--color-bg);
@@ -267,7 +278,7 @@ body.about-open.submit-open col.col-author { width: 20%; }
 thead th {
   text-align: left;
   border-bottom: none; /* remove header separator line */
-  font-weight: 400; /* prevent default bold in table headers */
+  font-weight: 300; /* Lighter weight for desktop */
   padding: var(--row-padding-y) var(--cell-padding-x);
   transition: padding var(--anim-ms) ease;
 }
@@ -610,6 +621,15 @@ tbody tr.newly-added {
    ============================================ */
 
 @media (max-width: 768px) {
+  /* Keep regular font weight on mobile */
+  body {
+    font-weight: 400;
+  }
+  
+  thead th {
+    font-weight: 400;
+  }
+  
   /* Make panels full-screen overlays on mobile */
   #aboutPanel,
   #submitPanel {

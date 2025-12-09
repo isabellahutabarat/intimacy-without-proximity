@@ -574,4 +574,148 @@ form#submitForm .field {
   border-right: 0 solid transparent;
 }
 
+/* ============================================
+   MOBILE RESPONSIVE STYLES
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Make panels full-screen overlays on mobile */
+  #aboutPanel,
+  #submitPanel {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: 100%;
+    transform: translateX(0);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--anim-ms) ease;
+    z-index: 1000;
+  }
+  
+  #aboutPanel.open,
+  #submitPanel.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+  
+  /* Main column stays in place on mobile */
+  body.about-open #mainColumn,
+  body.submit-open #mainColumn,
+  body.about-open.submit-open #mainColumn {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+  }
+  
+  /* Smaller text size for mobile table */
+  :root {
+    --font-size-body: 14px;
+  }
+  
+  /* Adjust top bar for mobile */
+  .topbar {
+    margin: 10px 10px 0 10px;
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+  
+  /* Table adjustments for mobile */
+  .table-section {
+    padding: 12px;
+  }
+  
+  table {
+    font-size: 14px;
+    min-width: 100%;
+  }
+  
+  /* Adjust column widths for mobile */
+  col.col-id { width: 40px; }
+  col.col-year { width: 50px; }
+  col.col-title { width: 45%; }
+  col.col-author { width: auto; }
+  
+  /* Remove responsive column adjustments since panels are full-screen */
+  body.about-open col.col-id,
+  body.submit-open col.col-id,
+  body.about-open.submit-open col.col-id { width: 40px; }
+  
+  body.about-open col.col-year,
+  body.submit-open col.col-year,
+  body.about-open.submit-open col.col-year { width: 50px; }
+  
+  body.about-open col.col-title,
+  body.submit-open col.col-title,
+  body.about-open.submit-open col.col-title { width: 45%; }
+  
+  body.about-open col.col-author,
+  body.submit-open col.col-author,
+  body.about-open.submit-open col.col-author { width: auto; }
+  
+  /* Adjust table padding */
+  thead th,
+  tbody tr[data-clickable="true"] td {
+    padding: 6px 8px;
+  }
+  
+  /* About panel mobile styles */
+  .about-inner {
+    padding: var(--page-padding-x);
+    font-size: 28px;
+    line-height: 28px;
+  }
+  
+  #closeAbout,
+  #closeSubmit {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+  
+  #aboutContent {
+    padding-top: 42px;
+  }
+  
+  /* Submit panel mobile styles */
+  .submit-inner {
+    padding: var(--page-padding-x);
+    font-size: 14px;
+  }
+  
+  #submitForm {
+    padding-top: 42px;
+  }
+  
+  form#submitForm .field {
+    grid-template-columns: 100px 1fr;
+    font-size: 14px;
+  }
+  
+  /* Expand wrap for mobile */
+  .expand-wrap {
+    grid-template-columns: 40px 50px minmax(0, 45%) 1fr;
+  }
+  
+  body.about-open .expand-wrap,
+  body.submit-open .expand-wrap,
+  body.about-open.submit-open .expand-wrap {
+    grid-template-columns: 40px 50px minmax(0, 45%) 1fr;
+  }
+  
+  /* Smaller expand content */
+  .expand-description,
+  .expand-link {
+    font-size: 14px;
+  }
+  
+  /* Author glyph size */
+  .cell-author .author-glyph,
+  .cell-author .author-glyph-hover {
+    width: 12px;
+    height: 12px;
+  }
+}
+
 

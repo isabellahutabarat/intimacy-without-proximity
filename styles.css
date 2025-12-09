@@ -743,10 +743,10 @@ tbody tr.newly-added {
   body.submit-open col.col-author,
   body.about-open.submit-open col.col-author { width: auto; }
   
-  /* Adjust table padding - tighter for mobile */
+  /* Adjust table padding - more vertical space for mobile */
   thead th,
   tbody tr[data-clickable="true"] td {
-    padding: 6px 4px;
+    padding: 9px 4px;
   }
   
   /* Remove extra offset on author column for mobile */

@@ -458,6 +458,11 @@ body.about-open.submit-open .expand-wrap {
 .expand-link a { 
   text-decoration-color: var(--color-green); 
   transition: color 150ms ease;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  display: inline-block;
 }
 .expand-link a:hover {
   color: rgba(255, 255, 255, 0.6); /* Light gray on hover */
@@ -468,6 +473,8 @@ body.about-open.submit-open .expand-wrap {
 .expand-link {
   padding-left: 150px;
   position: relative;
+  max-width: 100%;
+  overflow: hidden;
 }
 .expand-link::before {
   content: "";
@@ -806,6 +813,14 @@ tbody tr.newly-added {
   .expand-description,
   .expand-link {
     font-size: 14px;
+  }
+  
+  /* Mobile: align URL with description (no indent) */
+  .expand-link {
+    padding-left: 0; /* Remove indent on mobile */
+  }
+  .expand-link::before {
+    left: -14px; /* Align with description line */
   }
   
   /* Mobile link interactions - gray on tap/click */

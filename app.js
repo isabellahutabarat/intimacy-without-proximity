@@ -112,7 +112,7 @@
         // Clear the newlyAddedId after applying the class
         setTimeout(() => {
           state.newlyAddedId = null;
-        }, 1500);
+        }, 3000);
       }
 
       const idCell = document.createElement('td');

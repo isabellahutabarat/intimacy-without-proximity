@@ -576,7 +576,7 @@ form#submitForm .field {
 
 /* Newly added row highlight animation */
 tbody tr.newly-added {
-  animation: highlightFade 1.5s ease-out;
+  animation: highlightFade 3s ease-out;
 }
 
 @keyframes highlightFade {

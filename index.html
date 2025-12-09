@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>intimacy without proximity</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- EB Garamond regular and regular italic -->
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css?v=25" />
+    <script src="./config.js?v=25"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- Slide-in About Panel -->
+      <aside id="aboutPanel" aria-hidden="true">
+        <div class="about-inner">
+          <button id="closeAbout" aria-label="Close about panel">×</button>
+          <div id="aboutContent" class="about-regular">
+            This website extends the ideas of <i>Intimacy Without Proximity</i> into a living, digital form. It gathers the references, sources, and materials that shaped the book, and presents them as an ongoing anthology built through links.
+<br><br>Designed with a minimal, text-focused approach influenced by early internet brutalism, the site foregrounds functionality and trace. Links appear with green underlines, shifting once visited to mark each user's path through the network. What you see here is less a collection of essays than a system of connections: abstracts, descriptions, and openings into larger bodies of work.
+<br><br>Visitors are invited to add their own sources, extending the network beyond the book and into shared space. Through these contributions, the site maps how knowledge moves between people who may never meet, yet remain in quiet conversation with one another.
+<br><br>Intimacy happens in the act of tracing how knowledge circulates between people who may never meet, but are still in conversation. This platform is a place to follow links, leave traces, and take part in the ongoing exchange of ideas.
+
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Column -->
+      <main id="mainColumn">
+        <!-- Top Bar -->
+        <header class="topbar" role="banner">
+          <button id="siteTitle" aria-controls="aboutPanel" aria-expanded="false">intimacy without proximity</button>
+          <div class="topbar-right">
+            <button id="submitBtn" aria-haspopup="dialog" aria-controls="submitPanel">submit</button>
+          </div>
+        </header>
+
+        <!-- Table -->
+        <section class="table-section" aria-labelledby="archiveLabel">
+          <h2 id="archiveLabel" class="visually-hidden">Archive</h2>
+          <div class="table-wrapper">
+            <table id="archiveTable" role="table" aria-describedby="archiveLabel">
+              <colgroup>
+                <col class="col-id" />
+                <col class="col-year" />
+                <col class="col-title" />
+                <col class="col-author" />
+              </colgroup>
+              <thead>
+                <tr role="row">
+                  <th scope="col">
+                    <button class="th-btn" data-sort="id" aria-label="Sort by number">#</button>
+                  </th>
+                  <th scope="col">
+                    <button class="th-btn" data-sort="year" aria-label="Sort by year">Date</button>
+                  </th>
+                  <th scope="col">
+                    <button class="th-btn" data-sort="title" aria-label="Sort by title">Title</button>
+                  </th>
+                  <th scope="col">
+                    <button class="th-btn" data-sort="author" aria-label="Sort by author">Author</button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="archiveTbody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Submit Panel -->
+    <aside id="submitPanel" aria-hidden="true">
+      <div class="submit-inner">
+        <button id="closeSubmit" aria-label="Close submit form">×</button>
+        <form id="submitForm">
+          <label class="field">
+            <span class="label">link/URL:</span>
+            <input type="url" id="inputUrl" name="url" placeholder="https://example.com" required />
+          </label>
+          <div class="submit-actions">
+            <button type="button" id="scrapeBtn">fetch metadata</button>
+          </div>
+          <div class="divider"></div>
+          <label class="field">
+            <span class="label">Title</span>
+            <input type="text" id="inputTitle" name="title" />
+          </label>
+          <label class="field">
+            <span class="label">Author</span>
+            <input type="text" id="inputAuthor" name="author" />
+          </label>
+          <label class="field">
+            <span class="label">Year</span>
+            <input type="text" id="inputYear" name="year" inputmode="numeric" pattern="\d{4}" />
+          </label>
+          <label class="field">
+            <span class="label">Description</span>
+            <textarea id="inputDescription" name="description" rows="12"></textarea>
+          </label>
+          <div class="submit-actions">
+            <button type="submit" class="post-button">post</button>
+          </div>
+        </form>
+      </div>
+    </aside>
+
+    <script src="./app.js?v=25"></script>
+  </body>
+  </html>
+
+

@@ -1,0 +1,577 @@
+/* Root tokens (overridden at runtime by CONFIG via CSS variables) */
+:root {
+  --font-body: "ABC Diatype", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  --font-italic: "EB Garamond", serif;
+  --font-size-body: 18px;
+  --font-size-about: 28px;
+
+  --color-text: #ffffff;
+  --color-bg: #000000;
+  --color-grey-bar: #3a3a3a;
+  --color-green: #00ff00;
+
+  --page-padding-x: 18px; /* used for x and y paddings to match spec */
+  --row-padding-y: 7px;
+  --cell-padding-x: 12px; /* horizontal spacing between date/title/author */
+  --gap-date-title: 24px; /* extra space between Date and Title */
+  --gap-title-author: 32px; /* extra space between Title and Author */
+  --title-col-pct: 40%; /* Title column width percentage */
+  --gap-id-date: 24px; /* extra left space before Date */
+  --title-inset-left: 0px; /* additional left inset for Title column content */
+  --offset-date: 0px;
+  --offset-title: 0px;
+  --offset-author: 0px;
+  --line-width: 1px;
+  --about-width: 25vw;
+  --anim-ms: 280ms;
+
+  --col-id-w: 56px;
+  --col-year-w: 96px;
+  --col-author-w: 220px;
+}
+
+/* Resets */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+/* Self-hosted ABC Diatype (Regular + Regular Italic) */
+@font-face {
+  font-family: "ABC Diatype";
+  src:
+    url("./ABC Diatype copy 2/ABCDiatype-Regular-Trial.woff2") format("woff2"),
+    url("./ABC Diatype copy 2/ABCDiatype-Regular-Trial.woff") format("woff"),
+    url("./ABC Diatype copy 2/ABCDiatype-Regular-Trial.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "ABC Diatype";
+  src:
+    url("./ABC Diatype copy 2/ABCDiatype-RegularItalic-Trial.woff2") format("woff2"),
+    url("./ABC Diatype copy 2/ABCDiatype-RegularItalic-Trial.woff") format("woff"),
+    url("./ABC Diatype copy 2/ABCDiatype-RegularItalic-Trial.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+a {
+  color: inherit;
+  text-decoration-color: var(--color-green);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+button {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+/* Layout */
+#app {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+/* About Panel */
+#aboutPanel {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: var(--about-width);
+  max-width: 560px;
+  transform: translateX(-100%);
+  transition: transform var(--anim-ms) ease;
+  background: var(--color-bg);
+  border-right: var(--line-width) solid var(--color-text);
+  z-index: 20;
+}
+#aboutPanel.open {
+  transform: translateX(0);
+}
+#submitPanel {
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: var(--about-width);
+  max-width: 560px;
+  transform: translateX(100%);
+  transition: transform var(--anim-ms) ease;
+  background: #000;
+  color: #fff;
+  border-left: var(--line-width) solid var(--color-text);
+  z-index: 20;
+}
+#submitPanel.open {
+  transform: translateX(0);
+}
+.about-inner {
+  padding: var(--page-padding-x);
+  font-family: "EB Garamond", serif;
+  font-style: normal;
+  font-size: 32px;
+  line-height: 32px;
+  letter-spacing: -1px;
+  font-weight: 300;
+  height: 100%;
+  overflow-y: auto;
+  position: relative;
+}
+#closeAbout {
+  position: absolute;
+  top: var(--page-padding-x);
+  right: var(--page-padding-x);
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 150ms ease;
+}
+#closeAbout:hover {
+  opacity: 0.7;
+}
+#aboutContent { 
+  padding-top: 46px; /* 32px for X button + 14px spacing */
+}
+#aboutContent a { text-decoration-color: var(--color-green); }
+
+/* Explicit Garamond helpers */
+.about-regular { font-family: "EB Garamond", serif; font-style: normal; font-weight: 300; }
+.about-italic { font-family: "EB Garamond", serif; font-style: italic; }
+
+/* Push main when panel opens */
+#mainColumn {
+  transition: margin-left var(--anim-ms) ease, width var(--anim-ms) ease;
+}
+body.about-open #mainColumn {
+  margin-left: var(--about-width);
+  width: calc(100% - var(--about-width));
+}
+body.submit-open #mainColumn {
+  margin-right: var(--about-width);
+  width: calc(100% - var(--about-width));
+}
+body.about-open.submit-open #mainColumn {
+  margin-left: var(--about-width);
+  margin-right: var(--about-width);
+  width: calc(100% - (var(--about-width) * 2));
+}
+
+/* Top Bar */
+.topbar {
+  position: sticky;
+  top: 15px;
+  z-index: 10;
+  background: var(--color-grey-bar);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px var(--page-padding-x);
+  height: 35px;
+  margin: 15px 15px 0 15px;
+  border-bottom: none;
+  border-radius: 0;
+}
+.topbar #siteTitle { 
+  text-transform: none; 
+  transition: opacity 150ms ease;
+}
+.topbar #siteTitle:hover,
+.topbar #siteTitle:active {
+  opacity: 0.7;
+}
+.topbar #submitBtn {
+  transition: opacity 150ms ease;
+}
+.topbar #submitBtn:hover,
+.topbar #submitBtn:active {
+  opacity: 0.7;
+}
+.topbar-right { display: flex; gap: 16px; }
+
+/* Table */
+.table-section {
+  padding: var(--page-padding-x);
+  margin-top: 12px; /* extra space below grey title bar */
+}
+.table-wrapper {
+  /* no outer borders; only lines between rows */
+  overflow-x: auto;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed; /* keep headers and rows locked together */
+  min-width: 640px;
+  transition: min-width var(--anim-ms) ease;
+}
+body.about-open table {
+  min-width: 600px; /* Slightly smaller when about panel is open */
+}
+body.submit-open table {
+  min-width: 600px; /* Slightly smaller when submit panel is open */
+}
+body.about-open.submit-open table {
+  min-width: 520px; /* Compact for both panels open to ensure author column stays visible */
+}
+col.col-id { 
+  width: var(--col-id-w); 
+  transition: width var(--anim-ms) ease;
+}
+col.col-year { 
+  width: var(--col-year-w); 
+  transition: width var(--anim-ms) ease;
+}
+col.col-title { 
+  width: var(--title-col-pct); /* Title stops at configured % of table width */
+  transition: width var(--anim-ms) ease;
+}
+col.col-author { 
+  width: auto; /* Author starts earlier (no fixed min width) */
+  transition: width var(--anim-ms) ease;
+}
+body.about-open col.col-id { width: 52px; }
+body.about-open col.col-year { width: 88px; }
+body.about-open col.col-title { width: 32%; }
+body.about-open col.col-author { width: auto; }
+body.submit-open col.col-id { width: 48px; }
+body.submit-open col.col-year { width: 72px; }
+body.submit-open col.col-title { width: 30%; }
+body.submit-open col.col-author { width: auto; }
+body.about-open.submit-open col.col-id { width: 44px; }
+body.about-open.submit-open col.col-year { width: 64px; }
+body.about-open.submit-open col.col-title { width: 40%; }
+body.about-open.submit-open col.col-author { width: 20%; }
+thead th {
+  text-align: left;
+  border-bottom: none; /* remove header separator line */
+  font-weight: 400; /* prevent default bold in table headers */
+  padding: var(--row-padding-y) var(--cell-padding-x);
+  transition: padding var(--anim-ms) ease;
+}
+thead .th-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 0; /* spacing handled on th */
+  font-weight: 400;
+}
+thead .th-btn .indicator { opacity: 0.7; }
+/* Minimal per-column header spacing; no extra offsets on Date/Title */
+thead th:nth-child(1),
+thead th:nth-child(2),
+thead th:nth-child(3) {
+  padding-left: var(--cell-padding-x);
+  padding-right: var(--cell-padding-x);
+}
+thead th:nth-child(4) { /* Author only: allow offset */
+  padding-left: calc(var(--cell-padding-x) + var(--offset-author));
+  padding-right: var(--cell-padding-x);
+}
+tbody { border-top: var(--line-width) solid var(--color-text); } /* line above first row */
+tbody tr {
+  border-bottom: var(--line-width) solid var(--color-text);
+}
+tbody tr.active-row {
+  border-bottom: none;
+}
+tr.expansion-row > td {
+  border-bottom: var(--line-width) solid var(--color-text);
+}
+tbody tr[data-clickable="true"] td {
+  padding: var(--row-padding-y) var(--cell-padding-x);
+  vertical-align: top; /* align multi-line rows to the top */
+  transition: padding var(--anim-ms) ease;
+}
+/* Column-specific cell spacing to match header gaps */
+.cell-id,
+.cell-year,
+.cell-title {
+  padding-left: var(--cell-padding-x);
+  padding-right: var(--cell-padding-x);
+}
+.cell-author {
+  padding-left: calc(var(--cell-padding-x) + var(--offset-author)) !important;
+  padding-right: var(--cell-padding-x) !important;
+}
+/* Reduce gap between title and author when both panels are open */
+body.about-open.submit-open .cell-author {
+  padding-left: var(--cell-padding-x) !important;
+}
+body.about-open.submit-open thead th:nth-child(4) {
+  padding-left: var(--cell-padding-x);
+}
+
+/* Author glyph alignment */
+.cell-author {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  position: relative;
+}
+.cell-author .author-glyph {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  transform: translateY(1px);
+  transition: filter 150ms ease;
+  filter: none; /* White glyph by default */
+}
+/* Color overlay effect: turn white glyph to green on hover/active */
+tbody tr[data-clickable="true"]:hover .author-glyph,
+tbody tr.active-row .author-glyph {
+  filter: brightness(0) saturate(100%) invert(67%) sepia(93%) saturate(4574%) hue-rotate(76deg) brightness(107%) contrast(101%);
+}
+
+/* Hover state: green text, italic; no background */
+tbody tr[data-clickable="true"] td {
+  font-family: var(--font-body);
+}
+tbody tr[data-clickable="true"]:hover td {
+  background: transparent;
+  color: var(--color-green);
+  font-family: "EB Garamond", serif;
+  font-style: italic;
+}
+tbody tr.active-row td {
+  font-family: "EB Garamond", serif;
+  font-style: italic;
+}
+tr.expansion-row td,
+.expand-content,
+.expand-image {
+  font-family: "EB Garamond", serif;
+  font-style: italic;
+}
+tbody tr[data-clickable="true"].active-row {
+  background: transparent;
+  color: var(--color-green);
+  font-family: var(--font-italic);
+  transition: color var(--anim-ms) ease;
+}
+
+/* Active/open row state: persists until collapse */
+tbody tr.active-row {
+  background: transparent;
+  color: var(--color-green);
+  font-family: var(--font-italic);
+}
+tbody tr.active-row a {
+  color: inherit;
+}
+tbody tr[data-clickable="true"]:focus {
+  outline: none;
+}
+
+/* Expanded Row */
+tr.expansion-row > td {
+  padding: 0;
+}
+.expand-wrap {
+  display: grid;
+  grid-template-columns: var(--col-id-w) var(--col-year-w) minmax(0, var(--title-col-pct)) 1fr; /* Title capped at configured % */
+  gap: 0;
+  background: var(--color-bg);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 180ms ease, transform 180ms ease, grid-template-columns var(--anim-ms) ease;
+}
+/* Match table column widths when about panel is open */
+body.about-open .expand-wrap {
+  grid-template-columns: 52px 88px minmax(0, 32%) 1fr;
+}
+/* Match table column widths when submit panel is open */
+body.submit-open .expand-wrap {
+  grid-template-columns: 48px 72px minmax(0, 30%) 1fr;
+}
+/* Match table column widths when both panels are open */
+body.about-open.submit-open .expand-wrap {
+  grid-template-columns: 44px 64px minmax(0, 40%) 1fr;
+}
+.expansion-row.show .expand-wrap {
+  opacity: 1;
+  transform: translateY(0);
+}
+.expand-content {
+  grid-column: 3 / 5; /* span Title through Author width */
+  padding: calc(var(--row-padding-y)) var(--cell-padding-x) calc(var(--row-padding-y) * 1.5) var(--cell-padding-x);
+  position: relative;
+  font-family: var(--font-body);
+  font-style: normal;
+}
+.expand-subtitle {
+  display: none;
+}
+.expand-description {
+  margin: 0 0 8px 0;
+  line-height: 1.35;
+  font-family: var(--font-body);
+  font-style: normal;
+  padding-left: 0; /* No extra padding; aligns with title column */
+  position: relative;
+  white-space: pre-wrap;
+}
+.expand-description::before {
+  content: "";
+  position: absolute;
+  left: -14px; /* 14px to the left of text */
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-text);
+}
+.expand-link a { text-decoration-color: var(--color-green); }
+.expand-link {
+  padding-left: 150px;
+  position: relative;
+}
+.expand-link::before {
+  content: "";
+  position: absolute;
+  left: calc(150px - 14px);
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-text);
+}
+.expand-image {
+  grid-column: 4 / span 1; /* Align under Author column */
+  padding: calc(var(--row-padding-y)) 8px calc(var(--row-padding-y) * 1.5) 8px;
+}
+.expand-image img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* No underline on table titles */
+tbody tr .cell-title a,
+tbody tr .cell-title {
+  text-decoration: none;
+}
+
+/* Submit Panel */
+.submit-inner {
+  height: 100%;
+  padding: var(--page-padding-x);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  overflow-y: auto;
+  position: relative;
+}
+#closeSubmit {
+  position: absolute;
+  top: var(--page-padding-x);
+  right: var(--page-padding-x);
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 150ms ease;
+}
+#closeSubmit:hover {
+  opacity: 0.7;
+}
+#submitForm {
+  padding-top: 46px; /* 32px for X button + 14px spacing */
+}
+form#submitForm .field {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  align-items: start;
+  padding: 10px 0;
+  border-bottom: var(--line-width) solid var(--color-text);
+  gap: 12px;
+}
+.field .label { white-space: nowrap; }
+.field input, .field textarea {
+  width: 100%;
+  border: none;
+  padding: 6px 10px;
+  background: transparent;
+  border-left: none; /* remove middle vertical line; keep only horizontals */
+  font: inherit;
+  color: inherit;
+}
+.divider {
+  height: 1px;
+  background: var(--color-text);
+  margin: 10px 0;
+}
+.submit-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 0;
+}
+.submit-actions button {
+  padding: 8px 24px;
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-text);
+  text-transform: lowercase;
+  font: inherit;
+  cursor: pointer;
+  transition: opacity 150ms ease;
+}
+.submit-actions button:hover:not(:disabled) {
+  opacity: 0.7;
+}
+.submit-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.post-button {
+  padding: 8px 24px;
+  background: #000;
+  color: #fff;
+  border: 1px solid #fff;
+  text-transform: lowercase;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Sorting indicator style (minimal) */
+.th-btn[data-state="asc"]::after { content: "↑"; }
+.th-btn[data-state="desc"]::after { content: "↓"; }
+
+/* Typewriter baseline */
+.typewriter {
+  white-space: pre-wrap;
+  overflow: hidden;
+  border-right: 0 solid transparent;
+}
+
+

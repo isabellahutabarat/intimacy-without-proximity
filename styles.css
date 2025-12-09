@@ -444,7 +444,16 @@ body.about-open.submit-open .expand-wrap {
   width: 1px;
   background: var(--color-text);
 }
-.expand-link a { text-decoration-color: var(--color-green); }
+.expand-link a { 
+  text-decoration-color: var(--color-green); 
+  transition: color 150ms ease;
+}
+.expand-link a:hover {
+  color: rgba(255, 255, 255, 0.6); /* Light gray on hover */
+}
+.expand-link a:active {
+  color: rgba(255, 255, 255, 0.4); /* Darker gray when clicking */
+}
 .expand-link {
   padding-left: 150px;
   position: relative;
@@ -777,6 +786,11 @@ tbody tr.newly-added {
   .expand-description,
   .expand-link {
     font-size: 14px;
+  }
+  
+  /* Mobile link interactions - gray on tap/click */
+  .expand-link a:active {
+    color: rgba(255, 255, 255, 0.5); /* Gray when tapping on mobile */
   }
   
   /* Author glyph size */

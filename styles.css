@@ -628,36 +628,59 @@ form#submitForm .field {
   
   table {
     font-size: 14px;
-    min-width: 100%;
+    min-width: 0;
+    width: 100%;
+    table-layout: fixed;
   }
   
-  /* Adjust column widths for mobile */
-  col.col-id { width: 40px; }
-  col.col-year { width: 50px; }
-  col.col-title { width: 45%; }
+  .table-wrapper {
+    overflow-x: visible;
+  }
+  
+  /* Adjust column widths for mobile - tighter to fit author */
+  col.col-id { width: 35px; }
+  col.col-year { width: 45px; }
+  col.col-title { width: 38%; }
   col.col-author { width: auto; }
   
   /* Remove responsive column adjustments since panels are full-screen */
   body.about-open col.col-id,
   body.submit-open col.col-id,
-  body.about-open.submit-open col.col-id { width: 40px; }
+  body.about-open.submit-open col.col-id { width: 35px; }
   
   body.about-open col.col-year,
   body.submit-open col.col-year,
-  body.about-open.submit-open col.col-year { width: 50px; }
+  body.about-open.submit-open col.col-year { width: 45px; }
   
   body.about-open col.col-title,
   body.submit-open col.col-title,
-  body.about-open.submit-open col.col-title { width: 45%; }
+  body.about-open.submit-open col.col-title { width: 38%; }
   
   body.about-open col.col-author,
   body.submit-open col.col-author,
   body.about-open.submit-open col.col-author { width: auto; }
   
-  /* Adjust table padding */
+  /* Adjust table padding - tighter for mobile */
   thead th,
   tbody tr[data-clickable="true"] td {
-    padding: 6px 8px;
+    padding: 6px 4px;
+  }
+  
+  /* Remove extra offset on author column for mobile */
+  .cell-author {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+  }
+  
+  body.about-open .cell-author,
+  body.submit-open .cell-author,
+  body.about-open.submit-open .cell-author {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+  }
+  
+  thead th:nth-child(4) {
+    padding-left: 4px;
   }
   
   /* About panel mobile styles */
@@ -680,28 +703,50 @@ form#submitForm .field {
   
   /* Submit panel mobile styles */
   .submit-inner {
-    padding: var(--page-padding-x);
+    padding: 14px;
     font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
   }
   
   #submitForm {
     padding-top: 42px;
+    width: 100%;
   }
   
   form#submitForm .field {
-    grid-template-columns: 100px 1fr;
+    grid-template-columns: 80px 1fr;
     font-size: 14px;
+    gap: 8px;
+  }
+  
+  /* Prevent zoom on input focus and ensure proper sizing */
+  form#submitForm .field input,
+  form#submitForm .field textarea {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  form#submitForm .field .label {
+    font-size: 14px;
+  }
+  
+  .submit-actions button {
+    font-size: 14px;
+    padding: 10px 20px;
   }
   
   /* Expand wrap for mobile */
   .expand-wrap {
-    grid-template-columns: 40px 50px minmax(0, 45%) 1fr;
+    grid-template-columns: 35px 45px minmax(0, 38%) 1fr;
   }
   
   body.about-open .expand-wrap,
   body.submit-open .expand-wrap,
   body.about-open.submit-open .expand-wrap {
-    grid-template-columns: 40px 50px minmax(0, 45%) 1fr;
+    grid-template-columns: 35px 45px minmax(0, 38%) 1fr;
   }
   
   /* Smaller expand content */

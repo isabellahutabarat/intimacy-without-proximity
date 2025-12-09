@@ -539,7 +539,7 @@ form#submitForm .field {
   grid-template-columns: 140px 1fr;
   align-items: baseline; /* Align text baselines for better visual alignment */
   padding: 10px 0;
-  border-bottom: var(--line-width) solid var(--color-text);
+  border-bottom: 0.5px solid var(--color-text); /* Match lighter line weight */
   gap: 12px;
 }
 .field .label { 
@@ -561,7 +561,7 @@ form#submitForm .field {
   color: rgba(255, 255, 255, 0.5);
 }
 .divider {
-  height: 1px;
+  height: 0.5px; /* Match lighter line weight */
   background: var(--color-text);
   margin: 10px 0;
 }
@@ -575,7 +575,7 @@ form#submitForm .field {
   padding: 8px 24px;
   background: transparent;
   color: var(--color-text);
-  border: 1px solid var(--color-text);
+  border: 0.5px solid var(--color-text); /* Match lighter line weight */
   text-transform: lowercase;
   font: inherit;
   cursor: pointer;
@@ -592,7 +592,7 @@ form#submitForm .field {
   padding: 8px 24px;
   background: #000;
   color: #fff;
-  border: 1px solid #fff;
+  border: 0.5px solid #fff; /* Match lighter line weight */
   text-transform: lowercase;
   font: inherit;
   cursor: pointer;
@@ -628,13 +628,27 @@ tbody tr.newly-added {
    ============================================ */
 
 @media (max-width: 768px) {
-  /* Keep regular font weight on mobile */
+  /* Slightly heavier font weight on mobile for better readability */
   body {
     font-weight: 400;
   }
   
+  tbody tr,
   thead th {
     font-weight: 400;
+  }
+  
+  /* Ensure row borders are visible on mobile */
+  tbody tr {
+    border-bottom: 0.5px solid var(--color-text);
+  }
+  
+  tbody tr.active-row {
+    border-bottom: none;
+  }
+  
+  tr.expansion-row > td {
+    border-bottom: 0.5px solid var(--color-text);
   }
   
   /* Make panels full-screen overlays on mobile */

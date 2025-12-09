@@ -112,7 +112,7 @@
         // Clear the newlyAddedId after applying the class
         setTimeout(() => {
           state.newlyAddedId = null;
-        }, 3000);
+        }, 5000);
       }
 
       const idCell = document.createElement('td');
@@ -586,7 +586,7 @@
    * @param {number} speed - Milliseconds per character (default: 30)
    * @returns {Promise} Resolves when typing is complete
    */
-  function typewriterEffect(element, text, speed = 30) {
+  function typewriterEffect(element, text, speed = 15) {
     return new Promise((resolve) => {
       if (!text) {
         element.value = '';
@@ -595,6 +595,7 @@
       }
       
       element.value = '';
+      element.classList.add('typing'); // Add gray text effect during typing
       let index = 0;
       
       const typeNextChar = () => {
@@ -603,6 +604,7 @@
           index++;
           setTimeout(typeNextChar, speed);
         } else {
+          element.classList.remove('typing'); // Remove gray effect when done
           resolve();
         }
       };

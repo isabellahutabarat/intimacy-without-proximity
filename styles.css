@@ -628,27 +628,38 @@ tbody tr.newly-added {
    ============================================ */
 
 @media (max-width: 768px) {
-  /* Slightly heavier font weight on mobile for better readability */
+  /* Heavier font weight on mobile for better readability */
   body {
-    font-weight: 400;
+    font-weight: 400 !important;
   }
   
   tbody tr,
-  thead th {
-    font-weight: 400;
+  tbody tr td,
+  thead th,
+  .topbar,
+  #mainColumn {
+    font-weight: 400 !important;
   }
   
-  /* Ensure row borders are visible on mobile */
+  table {
+    font-weight: 400 !important;
+  }
+  
+  /* Ensure row borders are visible on mobile - use 1px for actual phones */
   tbody tr {
-    border-bottom: 0.5px solid var(--color-text);
+    border-bottom: 1px solid var(--color-text) !important;
   }
   
   tbody tr.active-row {
-    border-bottom: none;
+    border-bottom: none !important;
   }
   
   tr.expansion-row > td {
-    border-bottom: 0.5px solid var(--color-text);
+    border-bottom: 1px solid var(--color-text) !important;
+  }
+  
+  tbody {
+    border-top: 1px solid var(--color-text) !important;
   }
   
   /* Make panels full-screen overlays on mobile */
@@ -810,6 +821,23 @@ tbody tr.newly-added {
   .submit-actions button {
     font-size: 14px;
     padding: 10px 20px;
+  }
+  
+  /* Submit section: make lines visible on actual phones */
+  form#submitForm .field {
+    border-bottom: 1px solid var(--color-text) !important;
+  }
+  
+  .divider {
+    height: 1px !important;
+  }
+  
+  .submit-actions button {
+    border: 1px solid var(--color-text) !important;
+  }
+  
+  .post-button {
+    border: 1px solid #fff !important;
   }
   
   /* Expand wrap for mobile */

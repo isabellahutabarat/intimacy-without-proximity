@@ -667,6 +667,14 @@
       saveUserItem(item); // Save to localStorage for persistence
       closeSubmit();
       render();
+      
+      // Scroll to bottom to show the newly added item
+      setTimeout(() => {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth'
+        });
+      }, 300); // Wait for render and panel close animation
     });
   }
 

@@ -1,7 +1,8 @@
 (() => {
   const state = {
     data: [],
-    sort: { key: 'id', dir: 'asc' }
+    sort: { key: 'id', dir: 'asc' },
+    newlyAddedId: null
   };
 
   const els = {
@@ -104,6 +105,15 @@
       tr.dataset.clickable = 'true';
       tr.dataset.id = String(item.id);
       if (visited.has(String(item.id))) tr.classList.add('visited');
+      
+      // Add highlight animation to newly added row
+      if (state.newlyAddedId && String(item.id) === String(state.newlyAddedId)) {
+        tr.classList.add('newly-added');
+        // Clear the newlyAddedId after applying the class
+        setTimeout(() => {
+          state.newlyAddedId = null;
+        }, 1500);
+      }
 
       const idCell = document.createElement('td');
       idCell.className = 'cell-id';
@@ -653,8 +663,9 @@
     });
     els.submitForm.addEventListener('submit', e => {
       e.preventDefault();
+      const newId = nextId();
       const item = {
-        id: nextId(),
+        id: newId,
         year: (els.inputYear.value || '').trim(),
         title: (els.inputTitle.value || '').trim() || (els.inputUrl.value || '').trim(),
         author: (els.inputAuthor.value || '').trim(),
@@ -665,6 +676,7 @@
       };
       state.data.push(item);
       saveUserItem(item); // Save to localStorage for persistence
+      state.newlyAddedId = newId; // Mark this item for highlight animation
       closeSubmit();
       render();
       

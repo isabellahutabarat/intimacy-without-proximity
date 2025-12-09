@@ -574,6 +574,20 @@ form#submitForm .field {
   border-right: 0 solid transparent;
 }
 
+/* Newly added row highlight animation */
+tbody tr.newly-added {
+  animation: highlightFade 1.5s ease-out;
+}
+
+@keyframes highlightFade {
+  0% {
+    background-color: rgba(128, 128, 128, 0.3);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
 /* ============================================
    MOBILE RESPONSIVE STYLES
    ============================================ */

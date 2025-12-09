@@ -300,7 +300,7 @@
     els.submitPanel.classList.add('open');
     els.submitPanel.setAttribute('aria-hidden', 'false');
     els.submitBtn.setAttribute('aria-expanded', 'true');
-    els.inputUrl.focus();
+    // Don't auto-focus to prevent keyboard from showing on mobile
   }
   function closeSubmit() {
     // Blur any focused element inside the panel to avoid aria-hidden warning
